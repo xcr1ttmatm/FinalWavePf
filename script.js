@@ -59,6 +59,34 @@ function revealAllMines() {
   });
 }
 
+function getHighestScore() {
+  return parseInt(localStorage.getItem('minesHighestScore')) || 0;
+}
+
+function setHighestScore(score) {
+  localStorage.setItem('minesHighestScore', score);
+}
+
+function updateHighestScoreDisplay() {
+  const highestScore = getHighestScore();
+  document.getElementById('highest-score').textContent = `🏆 Highest Score: ${highestScore}`;
+}
+
+// Call this on page load
+updateHighestScoreDisplay();
+
+// When the game ends and you have a score (e.g., variable `score`):
+function handleGameEnd(score) {
+  const highestScore = getHighestScore();
+  if (score > highestScore) {
+    setHighestScore(score);
+    updateHighestScoreDisplay();
+    // Optionally show a message for new high score
+    document.getElementById('message').textContent = "🎉 New Highest Score!";
+  }
+  // ...other end game logic...
+}
+
 resetBtn.addEventListener("click", initGame);
 
 // Initialize game on page load
